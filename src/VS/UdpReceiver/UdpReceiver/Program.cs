@@ -10,25 +10,15 @@ namespace UdpReceiver
 	{
 		static void Main(string[] args)
 		{
-			//文字コードを指定する
+			//specify char code
 			System.Text.Encoding enc = System.Text.Encoding.UTF8;
 
-			//データを送信するリモートホストとポート番号
-			string remoteHost = "192.168.11.4";
-			int remotePort = 9750;
-			//バインドするローカルポート番号
-			int localPort = 9750;// 0x2616
+			//locak port number to bind
+			int localPort = 9750;
 
-			//ローカルポート番号localPortにバインドする
+			//binding localPort
 			System.Net.Sockets.UdpClient udp =
 				new System.Net.Sockets.UdpClient(localPort);
-
-			//送信するデータを読み込む
-			//string sendMsg = Console.ReadLine();
-			//byte[] sendBytes = enc.GetBytes(sendMsg);
-			//リモートホストを指定してデータを送信する
-			//udp.Send(sendBytes, sendBytes.Length,
-			//	remoteHost, remotePort);
 
 			//データを受信する
 			System.Net.IPEndPoint remoteEP = null;
@@ -36,11 +26,11 @@ namespace UdpReceiver
 			{
 				byte[] rcvBytes = udp.Receive(ref remoteEP);
 				string rcvMsg = enc.GetString(rcvBytes);
-				OutputString(string.Format("受信したデータ:{0}", rcvMsg));
-				OutputString(string.Format("送信元アドレス:{0}/ポート番号:{1}",
+				OutputString(string.Format("received:{0}", rcvMsg));
+				OutputString(string.Format("source address:{0}/port:{1}",
 					remoteEP.Address, remoteEP.Port));
 			}
-			//UDP接続を終了
+			//close UDP connection
 			udp.Close();
 
 			//Console.ReadLine();
